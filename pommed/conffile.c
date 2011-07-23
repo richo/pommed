@@ -30,6 +30,7 @@
 #include "lcd_backlight.h"
 #include "kbd_backlight.h"
 #include "cd_eject.h"
+#include "song.h"
 #include "beep.h"
 #include "audio.h"
 
@@ -44,6 +45,7 @@ struct _lcd_nv8600mgt_cfg lcd_nv8600mgt_cfg;
 struct _audio_cfg audio_cfg;
 struct _kbd_cfg kbd_cfg;
 struct _eject_cfg eject_cfg;
+struct _song_cfg song_cfg;
 struct _beep_cfg beep_cfg;
 #ifndef __powerpc__
 struct _appleir_cfg appleir_cfg;
@@ -125,6 +127,15 @@ static cfg_opt_t eject_opts[] =
     CFG_END()
   };
 
+static cfg_opt_t song_opts[] =
+  {
+    CFG_BOOL("enabled", 1, CFGF_NONE),
+    CFG_STR("playpause_cmd", "mpc toggle", CFGF_NONE),
+    CFG_STR("next_cmd", "mpc next", CFGF_NONE),
+    CFG_STR("prev_cmd", "mpc prev", CFGF_NONE),
+    CFG_END()
+  };
+
 static cfg_opt_t beep_opts[] =
   {
     CFG_BOOL("enabled", 0, CFGF_NONE),
@@ -152,6 +163,7 @@ static cfg_opt_t opts[] =
     CFG_SEC("audio", audio_opts, CFGF_NONE),
     CFG_SEC("kbd", kbd_opts, CFGF_NONE),
     CFG_SEC("eject", eject_opts, CFGF_NONE),
+    CFG_SEC("song", song_opts, CFGF_NONE),
     CFG_SEC("beep", beep_opts, CFGF_NONE),
 #ifndef __powerpc__
     CFG_SEC("appleir", appleir_opts, CFGF_NONE),
@@ -237,6 +249,11 @@ config_print(void)
   printf(" + CD eject:\n");
   printf("    enabled: %s\n", (eject_cfg.enabled) ? "yes" : "no");
   printf("    device: %s\n", eject_cfg.device);
+  printf(" + Song control:\n");
+  printf("    enabled: %s\n", (song_cfg.enabled) ? "yes" : "no");
+  printf("    playpause command: %s\n", song_cfg.playpause_cmd);
+  printf("    next command: %s\n", song_cfg.next_cmd);
+  printf("    prev command: %s\n", song_cfg.prev_cmd);
   printf(" + Beep:\n");
   printf("    enabled: %s\n", (beep_cfg.enabled) ? "yes" : "no");
   printf("    beepfile: %s\n", beep_cfg.beepfile);
@@ -294,6 +311,10 @@ config_load(void)
   cfg_set_validate_func(cfg, "kbd|off_threshold", config_validate_positive_integer);
   /* CD eject */
   cfg_set_validate_func(cfg, "eject|device", config_validate_string);
+  /* Song Control */
+  cfg_set_validate_func(cfg, "song|playpause_cmd", config_validate_string);
+  cfg_set_validate_func(cfg, "song|next_cmd", config_validate_string);
+  cfg_set_validate_func(cfg, "song|prev_cmd", config_validate_string);
   /* beep */
   cfg_set_validate_func(cfg, "beep|beepfile", config_validate_string);
 
@@ -375,6 +396,13 @@ config_load(void)
   eject_cfg.device = strdup(cfg_getstr(sec, "device"));
   cd_eject_fix_config();
 
+  sec = cfg_getsec(cfg, "song");
+  song_cfg.enabled = cfg_getbool(sec, "enabled");
+  song_cfg.playpause_cmd = strdup(cfg_getstr(sec, "playpause_cmd"));
+  song_cfg.next_cmd = strdup(cfg_getstr(sec, "next_cmd"));
+  song_cfg.prev_cmd = strdup(cfg_getstr(sec, "prev_cmd"));
+  song_fix_config();
+
   sec = cfg_getsec(cfg, "beep");
   if (audio_cfg.disabled)
     beep_cfg.enabled = 0;
@@ -405,6 +433,8 @@ config_cleanup(void)
   free(audio_cfg.head);
 
   free(eject_cfg.device);
+
+  /* Free Song? */
 
   free(beep_cfg.beepfile);
 }

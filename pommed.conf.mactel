@@ -104,6 +104,16 @@ eject {
 	device = "/dev/dvd"
 }
 
+# Song Control Configuration
+song {
+    # enable/disable song control keys
+    enabled = yes
+    # commands to execute on each press
+    playpause_cmd = "mpc toggle"
+    next_cmd = "mpc next"
+    prev_cmd = "mpc prev"
+}
+
 # Beeper
 beep {
 	# enable/disable beeper
