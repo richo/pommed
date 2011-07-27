@@ -74,7 +74,7 @@ OBJS = $(SOURCES:%.c=%.o)
 
 pommed: $(OBJS) $(LIB_OBJS)
 
-pommed.o: pommed.c pommed.h evloop.h kbd_backlight.h lcd_backlight.h cd_eject.h evdev.h conffile.h audio.h dbus.h beep.h
+pommed.o: pommed.c pommed.h evloop.h kbd_backlight.h lcd_backlight.h cd_eject.h evdev.h conffile.h audio.h dbus.h beep.h song.h
 
 cd_eject.o: cd_eject.c cd_eject.h pommed.h conffile.h dbus.h
 
@@ -93,6 +93,8 @@ power.o: power.c power.h evloop.h pommed.h lcd_backlight.h
 beep.o: beep.c beep.h pommed.h evloop.h audio.h
 
 video.o: video.c video.h pommed.h dbus.h
+
+song.o: song.c song.h pommed.h dbus.h
 
 sysfs_backlight.o: sysfs_backlight.c pommed.h lcd_backlight.h conffile.h dbus.h
 
