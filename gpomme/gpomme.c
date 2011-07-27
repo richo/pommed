@@ -55,6 +55,7 @@
 
 #include "../client-common/dbus-client.h"
 #include "../client-common/video-client.h"
+#include "../client-common/song-client.h"
 
 
 #define _(str) gettext(str)
