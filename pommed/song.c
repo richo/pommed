@@ -39,9 +39,21 @@
 
 
 void
-song_switch(void)
+song_next(void)
 {
-  mbpdbus_send_song_switch();
+  mbpdbus_send_song_next();
+}
+
+void
+song_prev(void)
+{
+  mbpdbus_send_song_prev();
+}
+
+void
+song_playpause(void)
+{
+  mbpdbus_send_song_playpause();
 }
 
 int
