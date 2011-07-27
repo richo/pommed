@@ -12,7 +12,7 @@ enum button {
     PLAYPAUSE,
     NEXT,
     PREV
-}
+};
 
 int
 mbp_get_x_vtnum(Display *dpy);
