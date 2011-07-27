@@ -9,7 +9,7 @@ enum button {
     PLAYPAUSE,
     NEXT,
     PREV
-}
+};
 
 void
 song_switch(void);
