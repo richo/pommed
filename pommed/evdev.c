@@ -49,6 +49,7 @@
 #include "cd_eject.h"
 #include "audio.h"
 #include "video.h"
+#include "song.h"
 #include "beep.h"
 
 
@@ -192,14 +193,20 @@ evdev_process_events(int fd, uint32_t events)
 
 	  case KEY_NEXTSONG:
 	    logdebug("\nKEY: IR fast forward\n");
+
+        song_next();
 	    break;
 
 	  case KEY_PREVIOUSSONG:
 	    logdebug("\nKEY: IR rewind\n");
+
+        song_prev();
 	    break;
 
 	  case KEY_PLAYPAUSE:
 	    logdebug("\nKEY: IR play/pause\n");
+
+        song_playpause();
 	    break;
 
 	  case KEY_MENU:

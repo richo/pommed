@@ -12,7 +12,13 @@ enum button {
 };
 
 void
-song_switch(void);
+song_next(void);
+
+void
+song_prev(void);
+
+void
+song_playpause(void);
 
 int
 song_vt_active(int vt);
