@@ -389,11 +389,9 @@ mbpdbus_send_song_playpause(void)
 
   logdebug("DBus song playpause\n");
 
-  msg = dbus_message_new_signal("/org/pommed/notify/song/playpause",
-				"org.pommed.signal.song.playpause",
+  msg = dbus_message_new_signal("/org/pommed/notify/song",
+				"org.pommed.signal.song",
 				"playpause");
-  // XXX Is the second an address and the last a signal? Could clear up the
-  // code significantly
   if (msg == NULL)
     {
       logdebug("Failed to create DBus message\n");
