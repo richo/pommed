@@ -414,6 +414,80 @@ mbpdbus_send_song_playpause(void)
   dbus_message_unref(msg);
 }
 
+void
+mbpdbus_send_song_next(void)
+{
+  DBusMessage *msg;
+
+  int ret;
+
+  if (conn == NULL)
+    return;
+
+  logdebug("DBus song next\n");
+
+  msg = dbus_message_new_signal("/org/pommed/notify/song",
+				"org.pommed.signal.song",
+				"next");
+  if (msg == NULL)
+    {
+      logdebug("Failed to create DBus message\n");
+
+      return;
+    }
+
+  ret = dbus_connection_send(conn, msg, NULL);
+  if (ret == FALSE)
+    {
+      logdebug("Could not send next song signal\n");
+
+      dbus_message_unref(msg);
+
+      return;
+    }
+
+  dbus_connection_flush(conn);
+
+  dbus_message_unref(msg);
+}
+
+void
+mbpdbus_send_song_prev(void)
+{
+  DBusMessage *msg;
+
+  int ret;
+
+  if (conn == NULL)
+    return;
+
+  logdebug("DBus song prev\n");
+
+  msg = dbus_message_new_signal("/org/pommed/notify/song",
+				"org.pommed.signal.song",
+				"prev");
+  if (msg == NULL)
+    {
+      logdebug("Failed to create DBus message\n");
+
+      return;
+    }
+
+  ret = dbus_connection_send(conn, msg, NULL);
+  if (ret == FALSE)
+    {
+      logdebug("Could not send prev song signal\n");
+
+      dbus_message_unref(msg);
+
+      return;
+    }
+
+  dbus_connection_flush(conn);
+
+  dbus_message_unref(msg);
+}
+
 static void
 process_lcd_getlevel_call(DBusMessage *req)
 {
