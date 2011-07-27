@@ -37,6 +37,7 @@
 #include "audio.h"
 #include "video.h"
 #include "cd_eject.h"
+#include "song.h"
 
 
 static DBusError err;
@@ -376,6 +377,44 @@ mbpdbus_send_video_switch(void)
   dbus_message_unref(msg);
 }
 
+void
+mbpdbus_send_song_playpause(void)
+{
+  DBusMessage *msg;
+
+  int ret;
+
+  if (conn == NULL)
+    return;
+
+  logdebug("DBus song playpause\n");
+
+  msg = dbus_message_new_signal("/org/pommed/notify/song/playpause",
+				"org.pommed.signal.song.playpause",
+				"playpause");
+  // XXX Is the second an address and the last a signal? Could clear up the
+  // code significantly
+  if (msg == NULL)
+    {
+      logdebug("Failed to create DBus message\n");
+
+      return;
+    }
+
+  ret = dbus_connection_send(conn, msg, NULL);
+  if (ret == FALSE)
+    {
+      logdebug("Could not send song signal\n");
+
+      dbus_message_unref(msg);
+
+      return;
+    }
+
+  dbus_connection_flush(conn);
+
+  dbus_message_unref(msg);
+}
 
 static void
 process_lcd_getlevel_call(DBusMessage *req)
