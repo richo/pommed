@@ -22,6 +22,8 @@
 #define KBD_USER      0
 #define KBD_AUTO      1
 
+int
+mbp_get_x_vtnum(Display *dpy);
 
 /* Method calls */
 int

@@ -8,10 +8,6 @@
 #define VIDEO_SWITCH_SYSTEM      "/etc/pommed/videoswitch"
 #define VIDEO_SWITCH_USER        "/.videoswitch"
 
-
-int
-mbp_get_x_vtnum(Display *dpy);
-
 void
 mbp_video_switch(void);
 

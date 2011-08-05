@@ -8,17 +8,14 @@
 #define SONG_SWITCH_SYSTEM      "/etc/pommed/songswitch"
 #define SONG_SWITCH_USER        "/.songswitch"
 
-enum button {
+typedef enum {
     PLAYPAUSE,
     NEXT,
     PREV
-};
-
-int
-mbp_get_x_vtnum(Display *dpy);
+} button;
 
 void
-mbp_song_switch(enum button pressed);
+mbp_song_switch(button pressed);
 
 
 #endif /* !__MBP_SONG_CLIENT_H__ */
