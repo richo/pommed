@@ -19,7 +19,8 @@ LDLIBS = -lpthread -lX11 $(DBUS_LIBS) $(DBUSGLIB_LIBS) $(GTK_LIBS) $(CONFUSE_LIB
 
 SOURCES = gpomme.c theme.c conffile.c \
 		../client-common/dbus-client.c \
-		../client-common/video-client.c
+		../client-common/video-client.c \
+		../client-common/song-client.c
 POFILES = po/fr.po po/de.po po/es.po po/it.po po/ja.po
 
 OBJS = $(SOURCES:%.c=%.o)
@@ -31,7 +32,7 @@ mo: $(MOFILES)
 
 gpomme: $(OBJS)
 
-gpomme.o: gpomme.c gpomme.h theme.h ../client-common/dbus-client.h ../client-common/video-client.h
+gpomme.o: gpomme.c gpomme.h theme.h ../client-common/dbus-client.h ../client-common/video-client.h ../client-common/song-client.h
 
 theme.o: theme.c theme.h gpomme.h
 
@@ -40,6 +41,8 @@ conffile.o: conffile.c conffile.h gpomme.h theme.h
 ../client-common/dbus-client.o: ../client-common/dbus-client.c ../client-common/dbus-client.h
 
 ../client-common/video-client.o: ../client-common/video-client.c ../client-common/video-client.h
+
+../client-common/song-client.o: ../client-common/song-client.c ../client-common/song-client.h
 
 %.mo: %.po
 	@echo Building $@...
