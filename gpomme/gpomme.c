@@ -429,6 +429,22 @@ mbp_dbus_listen(DBusConnection *lconn, DBusMessage *msg, gpointer userdata)
       else if (vtstate == 1)
 	mbp_video_switch();
     }
+  else if (dbus_message_is_signal(msg, "org.pommed.signal.song", "playpause"))
+    {
+      int vtnum;
+      int vtstate;
+      int ret;
+
+      dpy = GDK_WINDOW_XDISPLAY(GTK_WIDGET(mbp_w.window)->window);
+
+      vtnum = mbp_get_x_vtnum(dpy);
+
+      ret = mbp_call_video_getvtstate(vtnum, mbp_video_getvtstate_cb, &vtstate);
+      if ((ret < 0) || (vtstate < 0))
+	fprintf(stderr, "video getVTState call failed !\n");
+      else if (vtstate == 1)
+	mbp_song_switch(PLAYPAUSE);
+    }
   else if (dbus_message_is_signal(msg, DBUS_INTERFACE_LOCAL, "Disconnected"))
     {
       printf("DBus disconnected\n");
