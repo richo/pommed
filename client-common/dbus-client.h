@@ -13,9 +13,7 @@
 #define MBP_DBUS_SIG_EJECT  (1 << 4)
 #define MBP_DBUS_SIG_LIGHT  (1 << 5)
 #define MBP_DBUS_SIG_VIDEO  (1 << 6)
-#define MBP_DBUS_SIG_SONG_PLAYPAUSE  (1 << 7)
-#define MBP_DBUS_SIG_SONG_NEXT       (1 << 8)
-#define MBP_DBUS_SIG_SONG_PREV       (1 << 9)
+#define MBP_DBUS_SIG_SONG   (1 << 7)
 
 
 #define LCD_USER      0
